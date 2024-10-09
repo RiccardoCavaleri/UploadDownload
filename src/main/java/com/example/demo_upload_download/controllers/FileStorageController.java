@@ -24,9 +24,7 @@ public class FileStorageController {
 
     @GetMapping("/download")
     public byte[] download(@RequestParam String fileName, HttpServletResponse response) throws IOException {
-        // prendo l'estensione del file
         String extension = FilenameUtils.getExtension(fileName);
-        // inserisco il content type con uno switch, aggiungendo altri case nello switch posso gestire altri tipi di file
         switch (extension) {
             case "gif":
                 response.setContentType(MediaType.IMAGE_GIF_VALUE);
@@ -39,9 +37,7 @@ public class FileStorageController {
                 response.setContentType(MediaType.IMAGE_PNG_VALUE);
                 break;
         }
-        // e devo impostare un header standard
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        // restituisco il file
         return fileStorageService.download(fileName);
     }
 
